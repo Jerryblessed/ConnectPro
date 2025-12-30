@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ConnectPro | Executive Suite Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="bg-[#010409] flex items-center justify-center min-h-screen">
+    <div class="glass p-16 rounded-[50px] text-center border border-white/5 shadow-2xl max-w-lg">
+        <div class="coach-badge w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center text-3xl">🎯</div>
+        <h1 class="text-4xl font-black text-white mb-2 uppercase tracking-tighter">ConnectPro</h1>
+        <p class="text-blue-400 font-bold mb-8">Executive Presence & English Coaching</p>
+        
+        <p class="text-slate-400 text-sm mb-10 leading-relaxed">
+            Welcome, Sir. Step into the suite and refine your presentation skills with Coach Marcus. 
+            Powered by Google Vertex AI and ElevenLabs.
+        </p>
+
+        <div id="g_id_onload"
+             data-client_id="{{ client_id }}"
+             data-callback="handleSignIn"
+             data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin flex justify-center" data-type="standard" data-shape="pill" data-theme="filled_blue" data-size="large"></div>
+    </div>
+
+    <script>
+        function handleSignIn(response) {
+            // Store token in session storage or send to backend
+            sessionStorage.setItem('userToken', response.credential);
+            // Redirect to the professional suite
+            window.location.href = "/dashboard";
+        }
+    </script>
+</body>
+</html>

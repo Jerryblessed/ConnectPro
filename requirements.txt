@@ -1,0 +1,9 @@
+flask
+google-cloud-storage
+google-cloud-aiplatform
+requests
+gunicorn
+google-cloud-speech
+google-cloud-vertexai
+google-cloud-aiplatform
+python-dotenv

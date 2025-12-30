@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConnectPro | Executive Suite - Coach Marcus Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <!-- Sidebar -->
+        <div class="space-y-6">
+            <!-- Coach Marcus Badge -->
+            <div class="coach-badge p-6 rounded-[30px] text-center">
+                <div class="text-4xl mb-2">🎯</div>
+                <h1 class="text-xl font-black mb-1">Coach Marcus</h1>
+                <p class="text-xs opacity-75">Executive Presence Expert</p>
+            </div>
+
+            <div class="glass p-6 rounded-[30px]">
+                <h2 class="text-sm font-bold mb-4 text-blue-400">Session Setup</h2>
+                <div class="space-y-4">
+                    <select id="mode" class="w-full bg-slate-900 p-3 rounded-xl text-sm border-none">
+                        <option value="verbatim">Full Script</option>
+                        <option value="advisory">Key Points Only</option>
+                    </select>
+                    <select id="lang" class="w-full bg-slate-900 p-3 rounded-xl text-sm border-none">
+                        <option value="English">English</option>
+                        <option value="French">French</option>
+                        <option value="German">German</option>
+                        <option value="Spanish">Spanish</option>
+                    </select>
+                    <input id="topic" placeholder="Topic (e.g., Innovation Strategy)"
+                        class="w-full bg-slate-900 p-3 rounded-xl text-sm outline-none" value="Executive Leadership">
+                    <button onclick="generate()" id="genBtn"
+                        class="w-full bg-blue-600 hover:bg-blue-500 py-3 rounded-xl font-bold transition">Generate
+                        Script</button>
+                </div>
+            </div>
+
+            <div class="glass p-6 rounded-[30px]">
+                <div class="flex justify-between items-end mb-2">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase">Delivery Score</span>
+                    <span id="accLabel" class="text-sm font-black text-emerald-400">0%</span>
+                </div>
+                <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div id="accBar" class="h-full w-0"></div>
+                </div>
+                <div class="mt-4 space-y-2 text-[10px] font-bold text-slate-500 uppercase">
+                    <div class="flex justify-between">
+                        <span>Fillers (Um/Ah):</span>
+                        <span id="fillerCount" class="text-red-400">0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Audience Energy:</span>
+                        <span id="audienceLevel" class="text-blue-400">Waiting...</span>
+                    </div>
+                </div>
+            </div>
+
+            <details id="improvementStack"
+                class="glass rounded-[20px] overflow-hidden opacity-0 transition-opacity duration-500">
+                <summary class="list-none p-4 flex justify-between items-center cursor-pointer hover:bg-white/5">
+                    <span class="text-[10px] font-bold uppercase text-slate-400">Focus Areas</span>
+                    <span id="mistakeBadge"
+                        class="bg-red-500/20 text-red-400 text-[10px] px-2 py-0.5 rounded-full">0</span>
+                </summary>
+                <div id="mistakeList" class="p-4 pt-0 space-y-2 max-h-48 overflow-y-auto"></div>
+            </details>
+        </div>
+
+        <!-- Main Board Area -->
+        <div class="lg:col-span-3 space-y-4">
+            <div class="glass rounded-[40px] flex flex-col min-h-[550px] relative overflow-hidden shadow-2xl">
+                <!-- Tabs -->
+                <div class="flex border-b border-white/5 bg-white/5">
+                    <button onclick="switchTab('script')" id="tabS"
+                        class="p-6 text-[10px] font-black uppercase tracking-widest border-b-2 border-blue-500 text-blue-500">Your
+                        Script</button>
+                    <button onclick="switchTab('assessment')" id="tabA"
+                        class="p-6 text-[10px] font-black uppercase tracking-widest opacity-20" disabled>Coaching
+                        Report</button>
+                </div>
+
+                <!-- Script View -->
+                <div id="viewS" class="flex-1 p-10 md:p-16 flex items-center justify-center">
+                    <div id="display" class="text-2xl md:text-4xl font-medium leading-relaxed text-slate-700">
+                        Ready when you are. Let's craft something powerful.
+                    </div>
+                </div>
+
+                <!-- Assessment View -->
+                <div id="viewA" class="hidden flex-1 p-10 overflow-y-auto prose prose-invert max-w-none">
+                    <div id="assessmentContent" class="text-slate-300"></div>
+                </div>
+
+                <!-- Coach Voice Player -->
+                <div class="absolute bottom-8 left-8 flex items-center gap-2">
+                    <button id="coachBtn" onclick="playCoachVoice()"
+                        class="hidden w-14 h-14 bg-purple-600 rounded-full flex items-center justify-center text-white shadow-xl hover:scale-105 transition">
+                        🎙️
+                    </button>
+                    <button id="speakerMain" onclick="playScript()"
+                        class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-xl hover:scale-105 transition disabled:opacity-20"
+                        disabled>
+                        🔊
+                    </button>
+                </div>
+
+                <!-- Recording Control -->
+                <div class="absolute bottom-8 right-8 flex items-center gap-4">
+                    <button id="audienceBtn" onclick="playAudienceReaction()"
+                        class="hidden bg-yellow-600 px-6 py-3 rounded-2xl font-black text-[10px] uppercase shadow-xl">
+                        👏 Audience
+                    </button>
+                    <button id="finalBtn" onclick="runAssessment()"
+                        class="hidden bg-emerald-600 px-8 py-3 rounded-2xl font-black text-[10px] uppercase shadow-xl transition hover:bg-emerald-500">
+                        Get Coaching
+                    </button>
+                    <button onclick="handleRecord()" id="micBtn"
+                        class="w-20 h-20 bg-slate-800 rounded-full flex items-center justify-center border-4 border-slate-900 shadow-xl transition disabled:opacity-20"
+                        disabled>
+                        <div id="micLabel" class="text-red-500 font-black text-xs uppercase">Record</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    
+    <!-- ELEVENLABS CONVERSATIONAL AI WIDGET (GEMINI 3 POWERED) -->
+    <elevenlabs-convai agent-id="agent_0801kdppe0vjee8a7ypw4txexjnn"></elevenlabs-convai>
+    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+</body>
+
+</html>
