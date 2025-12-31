@@ -364,7 +364,7 @@ async function playWithGoogleTTS(text, btn) {
         console.error("Both TTS systems failed:", error);
         btn.disabled = false;
         btn.innerHTML = '🔊';
-        alert('Voice synthesis temporarily unavailable. Please try again.');
+        alert("Use 'Need coaching?' option at bottom right for help.");
     }
 }
 

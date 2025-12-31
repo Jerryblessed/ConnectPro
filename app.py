@@ -15,11 +15,12 @@ load_dotenv()
 # ==========================================
 # CONFIGURATION
 # ==========================================
-PROJECT_ID = os.getenv("PROJECT_ID")
-CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+# app.py configuration
+PROJECT_ID = os.getenv("PROJECT_ID", "tag-file-manager")
+CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID") # Matches your env list
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
-ELEVENLABS_VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID")
-GCS_BUCKET_NAME = os.getenv("GCS_BUCKET_NAME")
+ELEVENLABS_VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID", "21m00Tcm4TlvDq8ikWAM")
+GCS_BUCKET_NAME = os.getenv("GCS_BUCKET_NAME", "connectpro-sessions")
 
 app = Flask(__name__)
 
