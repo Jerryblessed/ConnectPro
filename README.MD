@@ -362,18 +362,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 For issues, questions, or feature requests:
-- 📧 Email: support@connectpro.app
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/connectpro/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/connectpro/discussions)
+- 📧 Email: presentmeapp@gmail.com
+- 🐛 Issues: [GitHub Issues](https://github.com/Jerryblessed/connectpro/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/Jerryblessed/connectpro/discussions)
 
 ---
 
 ## 🌟 Demo
 
-**Live Demo**: [https://connectpro.app](https://connectpro.app)
+**Live Demo**: [https://connectpro-79255818146.us-central1.run.app/](https://connectpro-79255818146.us-central1.run.app/)
 
-**Video Demo**: Coming soon
-
+**Video Demo**: [ https://www.youtube.com/watch?v=hBwUS_-vu7Y]( https://www.youtube.com/watch?v=hBwUS_-vu7Y) 
 ---
 
 **Built with ❤️ by the ConnectPro Team**
